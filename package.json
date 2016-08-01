@@ -1,0 +1,19 @@
+{
+  "name": "learn-seneca",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.14.0",
+    "seneca": "^2.1.0",
+    "seneca-entity": "^1.2.0"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0"
+  }
+}
