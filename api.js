@@ -1,10 +1,11 @@
 'use strict';
 
 function api ( options ) {
+	let seneca   = this;
 	let validOps = { 'sum' : 'sum', 'product' : 'product' };
 
-	this.add( 'init:api', function ( msg, respond ) {
-		this.act( 'role:web', {
+	seneca.add( 'init:api', function ( msg, respond ) {
+		seneca.act( 'role:web', {
 			'use' : {
 				'prefix' : 'api',
 				'pin'    : 'role:api,path:*',
@@ -14,11 +15,11 @@ function api ( options ) {
 			}
 		} );
 
-		this.act( 'role:web', {
+		seneca.act( 'role:web', {
 			'use' : {
 				'prefix' : 'api',
-				'pin' : 'role:api,path:*',
-				'map' : {
+				'pin'    : 'role:api,path:*',
+				'map'    : {
 					'shop' : { 'GET' : true, 'suffix' : '/:operation' }
 				}
 			}
@@ -27,26 +28,25 @@ function api ( options ) {
 		respond();
 	} );
 
-	this.add( 'role:api,path:calculate',
-		function ( msg, respond ) {
-			this.act( 'role:math', {
+	seneca.add( 'role:api,path:calculate', function ( msg, respond ) {
+			seneca.act( 'role:math', {
 				'cmd'   : validOps[ msg.operation ],
 				'left'  : msg.left,
 				'right' : msg.right
 			}, respond );
 		} );
 
-	this.add( 'role:api,path:shop', function ( msg, reply ) {
+	seneca.add( 'role:api,path:shop', function ( msg, reply ) {
 		let shopMsg = { 'role' : 'shop', 'id' : msg.pid };
 		if ( 'get' === msg.operation ) {
 			shopMsg.get = 'product';
 		}
 
-		if ( 'purchase' === msg.opeation ) {
-			shopMsg.cmd = 'purchase';
+		if ( 'purchase' === msg.operation ) {
+			shopMsg.cmd = 'operation';
 		}
 
-		this.act( shopMsg, reply );
+		seneca.act( shopMsg, reply );
 	} );
 }
 
