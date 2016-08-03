@@ -9,6 +9,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "cloudinary": "^1.4.1",
     "express": "^4.14.0",
     "seneca": "^2.1.0",
     "seneca-entity": "^1.2.0"
