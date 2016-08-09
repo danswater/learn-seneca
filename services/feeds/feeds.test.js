@@ -6,9 +6,12 @@ const seneca = require( 'seneca' )();
 seneca
 	.use( 'entity' )
 	.use( require( './feeds' ) )
-	.error( assert.fail );
+	// .use( require( '../file-manager/file-manager' ) )
+	.use( require( '../media/media' ) )
+	.use( require( '../hashtags/hashtags' ) )
+	.error( assert.fail )
+	.ready( createFeed );
 
-createFeed();
 
 function createFeed () {
 	var pattern = {
@@ -20,15 +23,26 @@ function createFeed () {
 		'UserId'      : 1,
 		'Title'       : 'My First Feed',
 		'Description' : 'My First Feed Description',
-		'Media'       : 1,
-		'Filedata'    : 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAMCAgI'
+		'Filedata'    : 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAMCAgI',
+		'Hashtags'    : 'Happy,Alive,Funny'
 	};
 
-	var pattern = Object.assign( {}, pattern, { 'data' : data } )
+	pattern = Object.assign( {}, pattern, { 'data' : data } )
 
 	seneca.act( pattern, function ( err, newFeed ) {
-		seneca.act( 'role:feeds,cmd:get', { 'id' : newFeed.id }, function ( err, feed ) {
-			console.log( feed );
+
+		let feedsGetPattern = {
+			'role' : 'feeds',
+			'cmd'  : 'get'
+		};
+
+		let feedsGetData = {
+			'id' : newFeed.id
+		};
+
+		feedsGetPattern = Object.assign( {}, feedsGetPattern, feedsGetData );
+
+		seneca.act( feedsGetPattern, function ( err, feed ) {
 			assert.equal( newFeed.Title, feed.Title );
 		} );
 	} );

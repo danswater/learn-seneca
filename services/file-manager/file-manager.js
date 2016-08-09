@@ -7,7 +7,7 @@ function fileManager ( options ) {
 	let plugin = 'fileManager';
 
 	seneca.add( 'init:fileManager', init );
-	seneca.add( 'role:files,cmd:upload', cmdUpload );
+	seneca.add( 'role:fileManager,cmd:upload', cmdUpload );
 
 	function init ( msg, reply ) {
 		cloudinary.config( {
@@ -20,8 +20,14 @@ function fileManager ( options ) {
 	}
 
 	function cmdUpload ( msg, reply ) {
-		cloudinary.uploader.upload( msg.data.Filedata, function ( res ) {
-			reply( null, res );
+		// cloudinary.uploader.upload( msg.data.Filedata, function ( res ) {
+		// 	reply( null, res );
+		// } );
+		reply( null, {
+			'Url'    : 'www.google.com/image.jpg',
+			'Width'  : 120,
+			'Height' : 120,
+			'Format' : 'jpg'
 		} );
 	}
 

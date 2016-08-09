@@ -7,7 +7,10 @@ seneca
 	.use( 'entity' )
 	.use( require( './hashtags' ) )
 	.error( assert.fail )
-	.ready( createHashtags );
+	.ready( function () {
+		createHashtags();
+		createFeedHashtags();
+	} );
 
 function createHashtags () {
 	let pattern = {
@@ -19,9 +22,37 @@ function createHashtags () {
 		'Hashtags' : [ 'Funny', 'Happy', 'Alive' ]
 	};
 
-	var pattern = Object.assign( {}, pattern, data );
+	pattern = Object.assign( {}, pattern, { 'data' : data } );
 
 	seneca.act( pattern, function ( err, newHashtags ) {
 		assert.equal( newHashtags.length, 3 );
+	} );
+}
+
+
+function createFeedHashtags () {
+	let pattern = {
+		'role' : 'hashtags',
+		'cmd'  : 'createFeedReference'
+	};
+
+	let data = {
+		'FeedId'   : 1,
+		'Hashtags' : [ {
+			'id'   : 1,
+			'name' : 'Funny'
+		}, {
+			'id'   : 2,
+			'name' : 'Happy'
+		}, {
+			'id'   : 3,
+			'name' : 'Alive'
+		} ]
+	};
+
+	pattern = Object.assign( {}, pattern, { 'data' : data } );
+
+	seneca.act( pattern, function ( err, newFeedHashtags ) {
+		console.log( newFeedHashtags );
 	} );
 }

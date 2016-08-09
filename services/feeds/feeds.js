@@ -11,32 +11,41 @@ function feeds ( options ) {
 	seneca.add( 'role:feeds,cmd:delete', cmdDelete );
 
 	function cmdCreate ( msg, reply ) {
-		let data        = msg.data;
-		let metaInfo    = data.Filedata.split( ',' );
-		let feedOptions = {
-			'Title'        : data.Title,
-			'Description'  : data.Description,
-			'Created'      : moment().format( 'YYYY-MM-DD H:mm:ss' ),
-			'Views'        : 0,
-			'CommentCount' : 0,
-			'LikeCount'    : 0,
-			'MediaId'      : 0,
-			'FeedType'     : 'Image'
+		let data = msg.data;
 
+		let mediaPattern = {
+			'role' : 'media',
+			'cmd'  : 'create'
 		};
 
-		// call file-manager service
-		// seneca.act( 'role:fileManager,cmd:upload', callback )
+		let mediaData = { 'Url' : 'www.google.com', 'Width' : 240, 'Height' : 240, 'Format' : 'jpg' };
 
-		// call media service
-		// seneca.act( 'role:media,cmd:create', callback )
+		mediaPattern = Object.assign( {}, mediaPattern, { 'data' : mediaData } );
 
-		let feed = seneca.make( 'feeds' );
-		feed.data$( feedOptions );
-		feed.save$( reply );
+		seneca.act( mediaPattern, ( err, media ) => {
 
-		// call hashtag service
-		// seneca.act( 'role:hashtags,cmd:create', callback )
+			let feedOptions = {
+				'Title'        : data.Title,
+				'Description'  : data.Description,
+				'Created'      : moment().format( 'YYYY-MM-DD H:mm:ss' ),
+				'Views'        : 0,
+				'CommentCount' : 0,
+				'LikeCount'    : 0,
+				'MediaId'      : media.id,
+				'FeedType'     : 'Image'
+			};
+
+			let feed = seneca.make( 'feeds' );
+			feed.data$( feedOptions );
+			feed.save$( ( err, resNewFeed ) => {
+				if ( err ) {
+					return reply( err );
+				}
+
+				return reply( null, resNewFeed );
+			} );
+
+		} );
 	}
 
 	function cmdGet ( msg, reply ) {

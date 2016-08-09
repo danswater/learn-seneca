@@ -7,8 +7,13 @@ const seneca = require( 'seneca' )()
 	// .client( { 'type' : 'tcp', 'pin' : 'role:math' } )
 	// .client( { 'port' : 9002,  'pin' : 'role:shop' } )
 
-	.client( { 'port' : 9004,  'pin' : 'role:users' } )
-	.client( { 'port' : 9005,  'pin' : 'role:feeds' } );
+	// .client( { 'port' : 9004,  'pin' : 'role:users' } )
+	// .client( { 'port' : 9005,  'pin' : 'role:feeds' } )
+	// .client( { 'port' : 9006,  'pin' : 'role:fileManager' } )
+	// .client( { 'port' : 9007,  'pin' : 'role:hashtags' } )
+	// .client( { 'port' : 9008,  'pin' : 'role:media' } );
+
+	.use( 'mesh' )
 
 const app = require( 'express' )()
 	.use( require( 'body-parser' ).json() )
