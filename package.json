@@ -9,6 +9,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "bluebird": "^3.4.1",
     "cloudinary": "^1.4.1",
     "express": "^4.14.0",
     "lodash": "^4.14.1",

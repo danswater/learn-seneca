@@ -5,9 +5,10 @@ function media ( options ) {
 	let plugin = 'media';
 
 	seneca.add( 'role:media,cmd:create', cmdCreate );
+	seneca.add( 'role:media,cmd:get', cmdGet );
 
 	function cmdCreate ( msg, reply ) {
-		let mediaEntity    = seneca.make( 'hashtag' );
+		let mediaEntity    = seneca.make( 'media' );
 		mediaEntity.Url    = msg.data.Url;
 		mediaEntity.Format = msg.data.Format;
 		mediaEntity.save$( ( err, resNewMedia ) => {
@@ -18,6 +19,11 @@ function media ( options ) {
 
 			return reply( null, resNewMedia );
 		} );
+	}
+
+	function cmdGet( msg, reply ) {
+		let data = msg.data;
+		seneca.make( 'media' ).load$( data.Id, reply );
 	}
 
 	return {
