@@ -62,7 +62,7 @@ function feeds ( options ) {
 						'FeedType'     : 'Image'
 					};
 
-					let feed = seneca.make( 'feeds' );
+					let feed = seneca.make( 'feed' );
 					feed.data$( feedOptions );
 					feed.save$( ( err, resNewFeed ) => {
 						if ( err ) {
@@ -83,10 +83,27 @@ function feeds ( options ) {
 
 						seneca.act( hashtagFeedPattern, ( err, hashtagFeed ) => {
 
-							resNewFeed.Media    = media;
-							resNewFeed.Hashtags = hashtagFeed;
+							let userPattern = {
+								'role' : 'users',
+								'cmd'  : 'get'
+							};
 
-							return reply( null, resNewFeed );
+							let userData = {
+								'UserId' : data.UserId
+							};
+
+							userPattern = Object.assign( {}, userPattern, { 'data' : userData } );
+
+							seneca.act( userPattern, ( err, user ) => {
+
+								delete resNewFeed.Password;
+
+								resNewFeed.User     = user;
+								resNewFeed.Media    = media;
+								resNewFeed.Hashtags = hashtagFeed;
+
+								return reply( null, resNewFeed );
+							} )
 						} );
 					} );
 				} );
@@ -98,11 +115,11 @@ function feeds ( options ) {
 	}
 
 	function cmdGet ( msg, reply ) {
-		seneca.make( 'feeds' ).load$( msg.id, reply );
+		seneca.make( 'feed' ).load$( msg.id, reply );
 	}
 
 	function cmdGetAll ( msg, reply ) {
-		seneca.make( 'feeds' ).list$( ( err, feeds ) => {
+		seneca.make( 'feed' ).list$( ( err, feeds ) => {
 
 			let promisedMedias = Promise.map( feeds, ( feed ) => {
 				return new Promise( ( resolve, reject ) => {
@@ -175,7 +192,7 @@ function feeds ( options ) {
 	}
 
 	function cmdDelete ( msg, reply ) {
-		seneca.make( 'feeds' ).remove$( msg.id, reply );
+		seneca.make( 'feed' ).remove$( msg.id, reply );
 	}
 
 	return {

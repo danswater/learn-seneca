@@ -18,6 +18,7 @@ const seneca = require( 'seneca' )()
 const app = require( 'express' )()
 	.use( require( 'body-parser' ).json() )
 
+	.use( '/api/v1', require( './lib/auth' )( seneca ) )
 	.use( '/api/v1', require( './lib/users' )( seneca ) )
 	.use( '/api/v1', require( './lib/feeds' )( seneca ) )
 
