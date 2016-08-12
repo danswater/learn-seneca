@@ -15,7 +15,7 @@
     "cloudinary": "^1.4.1",
     "express": "^4.14.0",
     "jwt-simple": "^0.5.0",
-    "lodash": "^4.14.1",
+    "lodash": "^4.14.2",
     "moment": "^2.14.1",
     "seneca": "^2.1.0",
     "seneca-balance-client": "^0.5.0",

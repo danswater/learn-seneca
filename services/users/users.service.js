@@ -1,8 +1,6 @@
 'use strict';
 
-const seneca = require( 'seneca' )();
-
-seneca
+require( 'seneca' )()
 	.use( 'entity' )
 	.use( require( './users' ) )
 	.use( 'mesh', {

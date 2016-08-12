@@ -2,6 +2,15 @@
 
 const utils  = require( './utils' );
 const bcrypt = require( 'bcrypt' );
+const moment = require( 'moment' );
+const _      = require( 'lodash' );
+
+function User ( obj ) {
+	return _( obj )
+		.extend( {} )
+		.omit( [ 'Password' ] )
+		.value();
+}
 
 function users ( options ) {
 	let seneca = this;
@@ -22,11 +31,15 @@ function users ( options ) {
 
 	function cmdGet ( msg, reply ) {
 		let data = msg.data;
-		seneca.make( 'user' ).load$( data.UserId, reply );
+		seneca.make( 'user' ).load$( data.UserId, ( err, user ) => {
+			reply( null, User( user ) );
+		}  );
 	}
 
 	function cmdGetAll ( msg, reply ) {
-		seneca.make( 'user' ).list$( reply );
+		seneca.make( 'user' ).list$( ( err, user ) => {
+			reply( null, User( user ) );
+		} );
 	}
 
 	function cmdDelete ( msg, reply ) {
@@ -52,6 +65,8 @@ function users ( options ) {
 					};
 
 					data.Password = hash;
+					data.Verified = false;
+					data.Created  = moment().format( 'YYYY-MM-DD H:mm:ss' );
 
 					pattern = Object.assign( {}, pattern, { 'data' : data } );
 
@@ -90,7 +105,7 @@ function users ( options ) {
 					} );
 				}
 
-				return reply( null, { 'Token' : utils.createJWT( user ), 'User' : user } );
+				return reply( null, { 'Token' : utils.createJWT( user ), 'User' : User( user ) } );
 			} );
 
 		} );
