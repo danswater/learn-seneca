@@ -8,9 +8,14 @@ function media ( options ) {
 	seneca.add( 'role:media,cmd:get', cmdGet );
 
 	function cmdCreate ( msg, reply ) {
+		let data = msg.data;
+
 		let mediaEntity    = seneca.make( 'media' );
-		mediaEntity.Url    = msg.data.Url;
-		mediaEntity.Format = msg.data.Format;
+		mediaEntity.Url    = data.url;
+		mediaEntity.Format = data.format;
+		mediaEntity.Width  = data.width;
+		mediaEntity.Height = data.Height;
+
 		mediaEntity.save$( ( err, resNewMedia ) => {
 
 			if ( err ) {

@@ -143,7 +143,13 @@ function feeds ( options ) {
 	}
 
 	function cmdGetAll ( msg, reply ) {
-		seneca.make( 'feed' ).list$( ( err, feeds ) => {
+		let opt = {
+			'sort$' : {
+				'Created' : -1
+			}
+		};
+
+		seneca.make( 'feed' ).list$( opt, ( err, feeds ) => {
 
 			function media ( feed ) {
 				return new Promise( ( resolve, reject ) => {

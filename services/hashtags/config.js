@@ -1,16 +1,14 @@
 'use strict';
 
 module.exports = {
-	'TOKEN_SECRET' : process.env.TOKEN_SECRET || 'YOUR_UNIQUE_JWT_TOKEN_SECRET',
-
 	'MONGO_CONFIG' : {
-		'uri' : process.env.CONFIG || 'mongodb://localhost:27017/user'
+		'uri' : process.env.CONFIG || 'mongodb://localhost:27017/hashtag'
 	},
 
 	'MESH_CONFIG' : {
 		'isbase' : true,
-		'port'   : 9004,
-		'pin'    : 'role:users'
+		'port'   : 9007,
+		'pin'    : 'role:hashtags'
 	},
 
 	'SENECA_CONFIG' : ( seneca ) => {
@@ -18,12 +16,12 @@ module.exports = {
 			'log' : {
 				'map' : [
 					{
-						'plugin'  : 'users',
+						'plugin'  : 'hashtags',
 						'handler' : 'print'
 					},
 					{
 						'level'   : 'all',
-						'handler' : seneca.loghandler.file( 'user.log' )
+						'handler' : seneca.loghandler.file( 'hashtags.log' )
 					}
 				]
 			}

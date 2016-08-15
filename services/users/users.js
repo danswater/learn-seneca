@@ -7,7 +7,6 @@ const _      = require( 'lodash' );
 
 function User ( obj ) {
 	return _( obj )
-		.extend( {} )
 		.omit( [ 'Password' ] )
 		.value();
 }

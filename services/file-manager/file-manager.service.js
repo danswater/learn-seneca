@@ -1,12 +1,23 @@
 'use strict';
 
-const seneca = require( 'seneca' )();
+const seneca = require( 'seneca' );
+const config = require( './config' );
 
-seneca
+let senecaConfig;
+if ( process.env.NODE_ENV === 'production' ) {
+	senecaConfig = config.SENECA_CONFIG( seneca );
+}
+
+function boot ( err ) {
+	if ( err ) {
+		return process.exit( !console.error( err ) );
+	}
+
+	console.log( 'File-manager service booted!' );
+}
+
+require( 'seneca' )()
 	.use( 'entity' )
 	.use( require( './file-manager' ) )
-	.use( 'mesh', {
-		'isbase' : true,
-		'port'   : 9006,
-		'pin'    : 'role:fileManager'
-	} );
+	.use( 'mesh', config.MESH_CONFIG )
+	.ready( boot );

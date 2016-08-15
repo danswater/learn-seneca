@@ -1,6 +1,7 @@
 'use strict';
 
 const cloudinary = require( 'cloudinary' );
+const config     = require( './config' );
 
 function fileManager ( options ) {
 	let seneca = this;
@@ -11,24 +12,24 @@ function fileManager ( options ) {
 
 	function init ( msg, reply ) {
 		cloudinary.config( {
-			'cloud_name' : 'danswater',
-			'api_key'    : '797561536523747',
-			'api_secret' : 'AFYoMgP1n9DTz3wdyubtQBJzLKs'
+			'cloud_name' : config.CLOUD_NAME,
+			'api_key'    : config.CLOUD_API_KEY,
+			'api_secret' : config.CLOUD_SECRET
 		} );
 
 		reply();
 	}
 
 	function cmdUpload ( msg, reply ) {
-		// cloudinary.uploader.upload( msg.data.Filedata, function ( res ) {
-		// 	reply( null, res );
-		// } );
-		reply( null, {
-			'Url'    : 'www.google.com/image.jpg',
-			'Width'  : 120,
-			'Height' : 120,
-			'Format' : 'jpg'
+		cloudinary.uploader.upload( msg.data.Filedata, function ( res ) {
+			reply( null, res );
 		} );
+		// reply( null, {
+		// 	'Url'    : 'www.google.com/image.jpg',
+		// 	'Width'  : 120,
+		// 	'Height' : 120,
+		// 	'Format' : 'jpg'
+		// } );
 	}
 
 	return {
