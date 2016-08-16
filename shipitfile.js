@@ -17,5 +17,7 @@ module.exports = (shipit) => {
 		}
 	} );
 
-	shipit.task( 'pwd', () => shipit.remote( 'pwd' ) );
+	shipit.on( 'cleaned', () => {
+		return shipit.remote('pwd' );
+	} );
 };
