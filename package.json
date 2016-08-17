@@ -27,6 +27,7 @@
     "chai": "^3.5.0",
     "mocha": "^3.0.2",
     "shipit-cli": "^1.4.1",
-    "shipit-deploy": "^2.2.0"
+    "shipit-deploy": "^2.2.0",
+    "shipit-npm": "^0.2.0"
   }
 }

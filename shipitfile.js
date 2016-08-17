@@ -16,8 +16,4 @@ module.exports = (shipit) => {
 			'servers' : 'root@162.248.160.69'
 		}
 	} );
-
-	shipit.on( 'cleaned', () => {
-		return shipit.remote('pwd' );
-	} );
 };
