@@ -1,5 +1,6 @@
 module.exports = (shipit) => {
 	require( 'shipit-deploy' )( shipit );
+	require( 'shipit-npm' )( shipit );
 
 	shipit.initConfig( {
 		'default' : {
