@@ -24,7 +24,7 @@
    */
   deploy : {
     production : {
-      user : "root",
+      user : "danswater",
       host : "162.248.160.69",
       ref  : "origin/master",
       repo : "https://github.com/danswater/learn-seneca.git",
@@ -32,7 +32,7 @@
       "post-deploy" : "npm install && pm2 startOrRestart ecosystem.json --env production"
     },
     dev : {
-      user : "node",
+      user : "danswater",
       host : "162.248.160.69",
       ref  : "origin/master",
       repo : "https://github.com/danswater/learn-seneca.git",
