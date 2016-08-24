@@ -5,3 +5,9 @@
  - [ ] Deployment strategy
  - [ ] Integrate CI
  - [ ] Create Front end service
+
+### Stacks
+ - MongoDB
+ - ExpressJS
+ - Seneca
+ - pm2
