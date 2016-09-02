@@ -1,32 +1,33 @@
 {
-  "name": "learn-seneca",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "./node_modules/.bin/mocha --reporter spec",
-    "start" : "pm2 start process.json",
-    "stop" : "pm2 stop all"
-  },
-  "author": "",
-  "license": "MIT",
-  "dependencies": {
-    "bcrypt": "^0.8.7",
-    "bcryptjs": "^2.3.0",
-    "bluebird": "^3.4.1",
-    "cloudinary": "^1.4.1",
-    "express": "^4.14.0",
-    "jwt-simple": "^0.5.0",
-    "lodash": "^4.14.2",
-    "moment": "^2.14.1",
-    "seneca": "^2.1.0",
-    "seneca-balance-client": "^0.5.0",
-    "seneca-entity": "^1.2.0",
-    "seneca-mesh": "^0.8.0",
-    "seneca-mongo-store": "^1.0.0"
-  },
-  "devDependencies": {
-    "chai": "^3.5.0",
-    "mocha": "^3.0.2"
-  }
+	"name": "learn-seneca",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"test": "./node_modules/.bin/mocha --reporter spec",
+		"startProduction" : "pm2 startOrRestart ecosystem.json --env production",
+		"startDev" : "pm2 startOrRestart ecosystem.json --env dev",
+		"stop" : "pm2 stop all"
+	},
+	"author": "",
+	"license": "MIT",
+	"dependencies": {
+		"bcrypt": "^0.8.7",
+		"bcryptjs": "^2.3.0",
+		"bluebird": "^3.4.1",
+		"cloudinary": "^1.4.1",
+		"express": "^4.14.0",
+		"jwt-simple": "^0.5.0",
+		"lodash": "^4.14.2",
+		"moment": "^2.14.1",
+		"seneca": "^2.1.0",
+		"seneca-balance-client": "^0.5.0",
+		"seneca-entity": "^1.2.0",
+		"seneca-mesh": "^0.8.0",
+		"seneca-mongo-store": "^1.0.0"
+	},
+	"devDependencies": {
+		"chai": "^3.5.0",
+		"mocha": "^3.0.2"
+	}
 }

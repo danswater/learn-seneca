@@ -1,46 +1,105 @@
 {
-  /**
-   * Application configuration section
-   * http://pm2.keymetrics.io/docs/usage/application-declaration/
-   */
-  apps : [
+	/**
+	* Application configuration section
+	* http://pm2.keymetrics.io/docs/usage/application-declaration/
+	*/
+	"apps" : [ {
+		"name" : "feeds",
+		"script" : "./services/feeds/feeds.service.js",
+		"watch" : true,
+		"env" : {
+			"NODE_ENV" : "development"
+		},
+		"env_production" : {
+			"NODE_ENV" : "production"
+		},
+		"error_file" : "./services/feeds/error.log",
+		"out_file" : "./services/feeds/out.log"
+	}, {
+		"name" : "file-manager",
+		"script" : "./services/file-manager/file-manager.service.js",
+		"watch" : true,
+		"env" : {
+			"NODE_ENV" : "development"
+		},
+		"env_production" : {
+			"NODE_ENV" : "production"
+		},
+		"error_file" : "./services/file-manager/error.log",
+		"out_file" : "./services/file-manager/out.log"
+	}, {
+		"name" : "hashtags",
+		"script" : "./services/hashtags/hashtags.service.js",
+		"watch" : true,
+		"env" : {
+			"NODE_ENV" : "development"
+		},
+		"env_production" : {
+			"NODE_ENV" : "production"
+		},
+		"error_file" : "./services/hashtags/error.log",
+		"out_file" : "./services/hashtags/out.log"
+	}, {
+		"name" : "media",
+		"script" : "./services/media/media.service.js",
+		"watch" : true,
+		"env" : {
+			"NODE_ENV" : "development"
+		},
+		"env_production" : {
+			"NODE_ENV" : "production"
+		},
+		"error_file" : "./services/media/error.log",
+		"out_file" : "./services/media/out.log"
+	}, {
+		"name" : "users",
+		"script" : "./services/users/users.service.js",
+		"watch" : true,
+		"env" : {
+			"NODE_ENV" : "development"
+		},
+		"env_production" : {
+			"NODE_ENV" : "production"
+		},
+		"error_file" : "./services/users/error.log",
+		"out_file" : "./services/users/out.log"
+	}, {
+		"name" : "gateway",
+		"script" : "./index.js",
+		"watch" : true,
+		"env" : {
+			"NODE_ENV" : "development"
+		},
+		"env_production" : {
+			"NODE_ENV" : "production"
+		},
+		"error_file" : "./error.log",
+		"out_file" : "./out.log"
+	} ],
 
-    // First application
-    {
-      name      : "learn-seneca",
-      script    : "index.js",
-      env: {
-        COMMON_VARIABLE: "true"
-      },
-      env_production : {
-        NODE_ENV: "production"
-      }
-    }
-  ],
-
-  /**
-   * Deployment section
-   * http://pm2.keymetrics.io/docs/usage/deployment/
-   */
-  deploy : {
-    production : {
-      user : "danswater",
-      host : "162.248.160.69",
-      ref  : "origin/master",
-      repo : "https://github.com/danswater/learn-seneca.git",
-      path : "~/learn-seneca/production",
-      "post-deploy" : "npm install && pm2 startOrRestart ecosystem.json --env production"
-    },
-    dev : {
-      user : "danswater",
-      host : "162.248.160.69",
-      ref  : "origin/master",
-      repo : "https://github.com/danswater/learn-seneca.git",
-      path : "~/learn-seneca/production",
-      "post-deploy" : "npm install && pm2 startOrRestart ecosystem.json --env dev",
-      env  : {
-        NODE_ENV: "dev"
-      }
-    }
-  }
+	/**
+	* Deployment section
+	* http://pm2.keymetrics.io/docs/usage/deployment/
+	*/
+	"deploy" : {
+		"production" : {
+			"user" : "danswater",
+			"host" : "162.248.160.69",
+			"ref"  : "origin/master",
+			"repo" : "https://github.com/danswater/learn-seneca.git",
+			"path" : "~/learn-seneca/production",
+			"post-deploy" : "npm install && npm run startProduction"
+		},
+		"dev" : {
+			"user" : "danswater",
+			"host" : "162.248.160.69",
+			"ref"  : "origin/master",
+			"repo" : "https://github.com/danswater/learn-seneca.git",
+			"path" : "~/learn-seneca/production",
+			"post-deploy" : "npm install && npm run startDev",
+			"env"  : {
+				"NODE_ENV": "dev"
+			}
+		}
+	}
 }
