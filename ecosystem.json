@@ -88,7 +88,7 @@
 			"ref"  : "origin/master",
 			"repo" : "https://github.com/danswater/learn-seneca.git",
 			"path" : "~/learn-seneca/production",
-			"post-deploy" : "npm install && npm run startProduction"
+			"post-deploy" : "export PATH=$PATH:/home/danswater/.linuxbrew/bin npm install && npm run startProduction"
 		},
 		"dev" : {
 			"user" : "danswater",
